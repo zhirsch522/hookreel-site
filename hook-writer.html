@@ -192,7 +192,7 @@
 <footer>
   <div class="wrap">
     <span>Hookreel · <a href="mailto:hookreel.studio@gmail.com">hookreel.studio@gmail.com</a></span>
-    <span id="foot-links"><a href="index.html">Home</a> · <a href="video-ads-for-productivity-apps.html">Productivity apps</a> · <a href="video-ads-for-fitness-apps.html">Fitness apps</a> · <a href="video-ads-for-shopify-stores.html">Shopify stores</a></span>
+    <span id="foot-links"><a href="index.html">Home</a> · <a href="video-ads-for-productivity-apps.html">Productivity apps</a> · <a href="video-ads-for-fitness-apps.html">Fitness apps</a> · <a href="video-ads-for-shopify-stores.html">Shopify stores</a> · <a href="video-ads-for-mac-apps.html">Mac apps</a> · <a href="video-ads-for-ai-apps.html">AI apps</a> · <a href="video-ads-for-chrome-extensions.html">Chrome extensions</a> · <a href="video-ads-for-finance-apps.html">Finance apps</a> · <a href="product-hunt-launch-video.html">Launch videos</a></span>
   </div>
 </footer>
 
@@ -220,9 +220,21 @@
 
   var noun = { app: 'app', product: 'product', service: 'service' };
   var show = {
-    app: function (d) { return 'Screen recording: open ' + d.name + ' and do the one thing it does best, in under 5 taps.'; },
-    product: function (d) { return 'Close-up of ' + d.name + ' in hand, then in use where ' + d.who + ' would actually use it.'; },
-    service: function (d) { return 'Quick before and after of what ' + d.name + ' handles, shot like a phone video, not a commercial.'; }
+    app: [
+      function (d) { return 'Screen recording: open ' + d.name + ' and do the one thing it does best, in under 5 taps.'; },
+      function (d) { return 'Phone in hand, over the shoulder. Three quick taps in ' + d.name + ', each with a one-word caption.'; },
+      function (d) { return 'Real-life moment, then a cut to the screen in ' + d.name + ' that fixes it. Repeat twice, faster each time.'; }
+    ],
+    product: [
+      function (d) { return 'Close-up of ' + d.name + ' in hand, then in use where ' + d.who + ' would actually use it.'; },
+      function (d) { return 'Three fast cuts of ' + d.name + ' in daily life: morning, midday, evening. One caption each.'; },
+      function (d) { return 'Unbox it in one take, then straight to the moment it pays off. No talking, just captions.'; }
+    ],
+    service: [
+      function (d) { return 'Quick before and after of what ' + d.name + ' handles, shot like a phone video, not a commercial.'; },
+      function (d) { return 'Show the 3 steps it takes to get started with ' + d.name + ', one caption per step.'; },
+      function (d) { return 'A customer-style clip: the problem, the message to ' + d.name + ', the result. Clearly labelled as a dramatization.'; }
+    ]
   };
   var end = function (d) {
     return d.kind === 'app' ? d.name + ' on the App Store screen. Text: "Try it free."'
@@ -302,8 +314,9 @@
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function render(d) {
-    current = pick(d).map(function (x) {
-      return { label: x.label, line: x.line(d), open: x.open(d), show: show[d.kind](d), end: end(d), why: x.why };
+    var offset = Math.floor(Math.random() * 3);
+    current = pick(d).map(function (x, i) {
+      return { label: x.label, line: x.line(d), open: x.open(d), show: show[d.kind][(i + offset) % 3](d), end: end(d), why: x.why };
     });
     list.innerHTML = current.map(function (h, i) {
       return '<li class="hook"><div class="hook-top"><span class="kind">' + esc(h.label) + '</span>' +
