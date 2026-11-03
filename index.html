@@ -1,0 +1,319 @@
+<title>Hookreel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg transform='translate(19 3) scale(1.2)'%3E%3Ccircle cx='40' cy='8' r='5' fill='none' stroke='%230071e3' stroke-width='4'/%3E%3Cpath d='M40 15 V58 a16 16 0 0 1 -32 0 V50' fill='none' stroke='%230071e3' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M19 50 L32 58 L19 66 Z' fill='%230071e3'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+  /* Layout: Apple-native product page, light only. Centered hero built around one phone playing the sample, then alternating white and gray bands in a 980px column. */
+  :root {
+    --bg: #ffffff;
+    --band: #f5f5f7;
+    --fg: #1d1d1f;
+    --muted: #6e6e73;
+    --line: #d2d2d7;
+    --accent: #0071e3;
+    --accent-press: #0062c4;
+    --on-accent: #ffffff;
+    --phone: #1d1d1f;
+    --screen: #2c2c2e;
+    --screen-text: #a1a1a6;
+    --nav: rgba(255, 255, 255, 0.8);
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color-scheme: light;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--nav); }
+  a { color: var(--accent); text-decoration: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 16px; top: 12px; z-index: 20; background: var(--bg); padding: 8px 12px; border-radius: 8px; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px)); }
+  .band { background: var(--band); }
+  section { padding-block: 100px; }
+  section[id] { scroll-margin-top: calc(48px + env(safe-area-inset-top, 0px)); }
+
+  /* Nav */
+  nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--nav); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 48px; gap: 16px; }
+  .wordmark { display: inline-flex; align-items: center; color: var(--fg); }
+  .wordmark:hover { text-decoration: none; }
+  .wordmark svg { height: 26px; width: auto; display: block; }
+  nav ul { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; font-size: 13px; }
+  nav ul a { color: var(--fg); opacity: 0.8; }
+  nav ul a:hover { opacity: 1; text-decoration: none; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; background: var(--accent); color: var(--on-accent); border-radius: 980px; padding: 0 22px; font-size: 17px; letter-spacing: -0.01em; transition: background-color .2s ease; }
+  .btn:hover { background: var(--accent-press); text-decoration: none; }
+  nav .btn { min-height: 28px; padding: 0 12px; font-size: 13px; opacity: 1; color: var(--on-accent); }
+  .more::after { content: "\00a0\203A"; }
+
+  /* Hero */
+  .hero { text-align: center; padding-block: 80px 0; overflow: hidden; }
+  .eyebrow { font-size: 21px; font-weight: 600; color: var(--muted); margin: 0 0 6px; letter-spacing: 0.004em; }
+  h1 { font-size: clamp(44px, 8vw, 80px); line-height: 1.05; font-weight: 700; letter-spacing: -0.035em; margin: 0 auto; max-width: 13ch; text-wrap: balance; }
+  .sub { font-size: clamp(19px, 2.4vw, 24px); line-height: 1.35; color: var(--muted); max-width: 31ch; margin: 20px auto 0; text-wrap: balance; letter-spacing: -0.012em; }
+  .actions { margin-top: 32px; display: flex; gap: 28px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .stage { margin-top: 64px; display: flex; flex-direction: column; align-items: center; gap: 16px; padding-bottom: 72px; }
+  /* iPhone mockup: titanium frame, thin black bezel, Dynamic Island, side buttons, home indicator */
+  .phone { position: relative; width: 264px; max-width: 70vw; margin-inline: auto; aspect-ratio: 71.5 / 149.6; padding: 3px; border-radius: 50px; box-sizing: border-box; background: linear-gradient(135deg, #8e8a85 0%, #5c5955 18%, #3d3b39 50%, #5c5955 82%, #a19d97 100%); box-shadow: 0 50px 90px -35px rgba(0, 0, 0, 0.45), 0 0 0 0.5px rgba(0, 0, 0, 0.4); }
+  .bezel { position: relative; width: 100%; height: 100%; padding: 9px; border-radius: 47px; box-sizing: border-box; background: #050505; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: 38px; overflow: hidden; clip-path: inset(0 round 38px); -webkit-mask-image: -webkit-radial-gradient(white, black); transform: translateZ(0); background: #07080c; isolation: isolate; }
+  .screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 50%; display: block; }
+  .island { position: absolute; top: 3.2%; left: 50%; transform: translateX(-50%); width: 33%; height: 4.4%; border-radius: 999px; background: #000; z-index: 2; }
+  .home-bar { position: absolute; bottom: 1.6%; left: 50%; transform: translateX(-50%); width: 36%; height: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.85); z-index: 2; }
+  .hw { position: absolute; width: 3px; background: linear-gradient(90deg, #6e6a65, #9d9893); border-radius: 2px; }
+  .hw.l { left: -2px; } .hw.r { right: -2px; }
+  .hw.action { top: 17%; height: 4.5%; }
+  .hw.vol-up { top: 25%; height: 8.5%; }
+  .hw.vol-down { top: 35.5%; height: 8.5%; }
+  .hw.power { top: 27%; height: 13%; }
+  .hw.cam { top: 55%; height: 9%; }
+  .sound { position: absolute; right: 50%; transform: translateX(50%); bottom: 5.5%; z-index: 3; min-height: 30px; padding: 0 14px; border: 0; border-radius: 980px; background: rgba(255, 255, 255, 0.16); color: #fff; font: 600 12px/1 var(--font); letter-spacing: -0.01em; cursor: pointer; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); touch-action: manipulation; }
+  .sound:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .caption { font-size: 14px; color: var(--muted); max-width: 32ch; }
+
+  h2 { font-size: clamp(32px, 5vw, 48px); line-height: 1.08; font-weight: 700; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+  .lede { font-size: 21px; line-height: 1.38; color: var(--muted); margin: 14px 0 0; max-width: 38ch; }
+
+  /* Specs */
+  .specs { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+  .specs li { border-top: 1px solid var(--line); padding-top: 14px; min-width: 0; }
+  .specs b { display: block; font-size: 28px; font-weight: 600; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .specs span { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); letter-spacing: -0.01em; }
+
+  /* Steps */
+  .steps { list-style: none; counter-reset: step; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+  .steps li { counter-increment: step; min-width: 0; }
+  .steps li::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--band); font-size: 15px; font-weight: 600; margin-bottom: 14px; font-variant-numeric: tabular-nums; }
+  .steps h3 { font-size: 21px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .steps p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+
+  /* Pricing */
+  .plans { margin-top: 56px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .plan { background: var(--bg); border-radius: 20px; padding: 40px 36px; display: flex; flex-direction: column; min-width: 0; }
+  .plan .name { font-size: 17px; font-weight: 600; }
+  .plan .price { margin-top: 4px; font-size: 56px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .plan .per { font-size: 15px; color: var(--muted); }
+  .plan ul { list-style: none; padding: 0; margin: 24px 0 32px; display: grid; gap: 12px; font-size: 15px; }
+  .plan li { border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+  .plan .btn { align-self: flex-start; margin-top: auto; }
+
+  /* FAQ */
+  .faq { margin-top: 40px; border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 22px 0; min-height: 44px; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; flex: none; font-weight: 300; font-size: 26px; line-height: 1; color: var(--muted); transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 0 0 24px; color: var(--muted); max-width: 60ch; }
+
+  footer { background: var(--band); border-top: 1px solid var(--line); padding-block: 20px 40px; font-size: 12px; color: var(--muted); letter-spacing: -0.01em; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+
+  @media (max-width: 760px) {
+    section { padding-block: 72px; }
+    .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .plans { grid-template-columns: 1fr; }
+    nav ul li.hide-sm { display: none; }
+    nav .btn { min-height: 32px; }
+  }
+  @media (max-width: 420px) {
+    .steps { grid-template-columns: 1fr; }
+    .specs b { font-size: 24px; }
+    .plan { padding: 32px 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn, summary::after { transition: none; } }
+</style>
+<style>
+  .hero .sub b { color: var(--fg); font-weight: 600; }
+  .assure { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .plan .btn { align-self: stretch; }
+  .plan.best { box-shadow: 0 0 0 2px var(--accent); }
+  .plan .tag { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 6px; }
+  .order-note { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; font-size: 15px; color: var(--muted); }
+  .addr { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; user-select: all; overflow-wrap: anywhere; }
+  .copy { min-height: 36px; padding: 0 14px; border: 1px solid var(--line); border-radius: 980px; background: var(--bg); color: var(--fg); font: 500 14px/1 var(--font); cursor: pointer; touch-action: manipulation; }
+  .copy:hover { border-color: var(--muted); }
+  .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .band .steps li::before { background: var(--bg); }
+  #pricing .plan { background: var(--band); }
+  .close { text-align: center; }
+  .close .lede { margin-inline: auto; }
+  .close .actions { margin-top: 28px; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+</style>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="wordmark" href="#main" aria-label="Hookreel home"><svg viewBox="0 0 300 84" aria-hidden="true"><circle cx="40" cy="8" r="5" fill="none" stroke="var(--accent)" stroke-width="4"/><path d="M40 15 V58 a16 16 0 0 1 -32 0 V50" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/><path d="M19 50 L32 58 L19 66 Z" fill="var(--accent)"/><text x="66" y="62" textLength="226" lengthAdjust="spacingAndGlyphs" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="42" font-weight="700" fill="currentColor">hookreel</text></svg></a>
+    <ul>
+            <li class="hide-sm"><a href="#how">How it works</a></li>
+      <li class="hide-sm"><a href="#pricing">Pricing</a></li>
+      <li class="hide-sm"><a href="#faq">FAQ</a></li>
+      <li><a class="btn" href="mailto:hookreel.studio@gmail.com?subject=Order%3A%203%20ads%20(%2449)&amp;body=Product%20or%20app%20link%3A%20%0AWho%20buys%20it%3A%20%0AAnything%20we%20should%20know%3A%20">Get my 3 ads</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Video ads for apps and small brands</p>
+      <h1>Ads people stop scrolling for.</h1>
+      <p class="sub"><b>3 vertical ads for $49.</b> Made for TikTok, Reels and Shorts, in your inbox in 48&nbsp;hours.</p>
+      <div class="actions">
+        <a class="btn" href="mailto:hookreel.studio@gmail.com?subject=Order%3A%203%20ads%20(%2449)&amp;body=Product%20or%20app%20link%3A%20%0AWho%20buys%20it%3A%20%0AAnything%20we%20should%20know%3A%20">Get my 3 ads</a>
+        <a class="more" href="mailto:hookreel.studio@gmail.com?subject=Free%20script%20request&amp;body=Product%20or%20app%20link%3A%20">Get a free script first</a>
+      </div>
+      <p class="assure">No call, no contract. Money back if the second round still misses.</p>
+      <div class="stage">
+        <div class="phone">
+          <span class="hw l action" aria-hidden="true"></span><span class="hw l vol-up" aria-hidden="true"></span><span class="hw l vol-down" aria-hidden="true"></span><span class="hw r power" aria-hidden="true"></span><span class="hw r cam" aria-hidden="true"></span>
+          <div class="bezel">
+            <div class="screen">
+              <video id="sample" src="sample.mp4" poster="sample-poster.jpg" width="1080" height="1920" autoplay muted loop playsinline aria-label="Sample ad for Undrafted"></video>
+              <span class="island" aria-hidden="true"></span>
+              <span class="home-bar" aria-hidden="true"></span>
+              <button id="sound" class="sound" type="button" aria-pressed="false">Sound on</button>
+            </div>
+          </div>
+        </div>
+        <p class="caption">A sample we made for Undrafted, an AI networking app for college students.</p>
+      </div>
+    </div>
+  </header>
+
+  <section id="how" class="band">
+    <div class="wrap">
+      <h2>Three steps. No shoot.</h2>
+      <ol class="steps">
+        <li><h3>Send your link</h3><p>Email us your product or app page. A line about who buys it helps.</p></li>
+        <li><h3>We script 3 hooks</h3><p>Three different openings, so you find out which one makes people stay.</p></li>
+        <li><h3>Get your ads</h3><p>Finished vertical ads with captions and music, ready to post or run as paid.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <h2>Pricing.</h2>
+      <p class="lede">Pay once. No subscription. The ads are yours to run anywhere.</p>
+      <div class="plans">
+        <div class="plan best">
+          <span class="tag">Start here</span>
+          <span class="name">Starter</span>
+          <span class="price">$49</span>
+          <span class="per">3 ads</span>
+          <ul>
+            <li>3 different hooks</li>
+            <li>Delivered in 48 hours</li>
+            <li>1080 × 1920, captions burned in</li>
+            <li>1 free round of changes</li>
+          </ul>
+          <a class="btn" href="mailto:hookreel.studio@gmail.com?subject=Order%3A%203%20ads%20(%2449)&amp;body=Product%20or%20app%20link%3A%20%0AWho%20buys%20it%3A%20%0AAnything%20we%20should%20know%3A%20">Get my 3 ads</a>
+        </div>
+        <div class="plan">
+          <span class="tag" aria-hidden="true">&nbsp;</span>
+          <span class="name">Testing pack</span>
+          <span class="price">$149</span>
+          <span class="per">10 ads</span>
+          <ul>
+            <li>10 ads to find your winner</li>
+            <li>Delivered in 72 hours</li>
+            <li>1080 × 1920, captions burned in</li>
+            <li>2 free rounds of changes</li>
+          </ul>
+          <a class="btn" href="mailto:hookreel.studio@gmail.com?subject=Order%3A%2010%20ads%20(%24149)&amp;body=Product%20or%20app%20link%3A%20%0AWho%20buys%20it%3A%20%0AAnything%20we%20should%20know%3A%20">Get my 10 ads</a>
+        </div>
+      </div>
+      <div class="order-note">
+        <span>Buttons not opening your mail app? Email us at</span>
+        <span id="addr" class="addr">hookreel.studio@gmail.com</span>
+        <button id="copy" class="copy" type="button">Copy email</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="band">
+    <div class="wrap">
+      <h2>Questions.</h2>
+      <div class="faq">
+        <details>
+          <summary>How do I pay?</summary>
+          <p>Email us your order and we reply with a secure card payment link. Work starts once it’s paid, and the 48 hours start then.</p>
+        </details>
+        <details>
+          <summary>Can I see the idea before I pay?</summary>
+          <p>Yes. Ask for a free script and we’ll send the 3 hooks we’d use for your product, no charge.</p>
+        </details>
+        <details>
+          <summary>What do you need from me?</summary>
+          <p>Your product or app page link. Photos, a logo or a line about who buys from you help, but they’re optional.</p>
+        </details>
+        <details>
+          <summary>Are the ads made with AI?</summary>
+          <p>Yes, with AI video tools. Each script is written for your product and each ad is checked before it’s sent. An AI person in an ad is never presented as a real customer, and those ads should be posted with the platform’s AI label on.</p>
+        </details>
+        <details>
+          <summary>What if I don’t like them?</summary>
+          <p>Tell us what’s off and we’ll redo them. If the second round still misses, you get your money back.</p>
+        </details>
+        <details>
+          <summary>Who owns the ads?</summary>
+          <p>You do. Run them on any platform, organic or paid.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="close">
+    <div class="wrap">
+      <h2>Your next ad, in 48 hours.</h2>
+      <p class="lede">Send your link today. Three hooks, one price, no call.</p>
+      <div class="actions">
+        <a class="btn" href="mailto:hookreel.studio@gmail.com?subject=Order%3A%203%20ads%20(%2449)&amp;body=Product%20or%20app%20link%3A%20%0AWho%20buys%20it%3A%20%0AAnything%20we%20should%20know%3A%20">Get my 3 ads</a>
+        <a class="more" href="mailto:hookreel.studio@gmail.com?subject=Free%20script%20request&amp;body=Product%20or%20app%20link%3A%20">Get a free script first</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function () {
+    var v = document.getElementById('sample');
+    var b = document.getElementById('sound');
+    if (!v || !b) return;
+    b.addEventListener('click', function () {
+      v.muted = !v.muted;
+      if (!v.muted) { v.currentTime = 0; v.play().catch(function () {}); }
+      b.textContent = v.muted ? 'Sound on' : 'Sound off';
+      b.setAttribute('aria-pressed', String(!v.muted));
+    });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); }
+  })();
+</script>
+<script>
+  (function () {
+    var b = document.getElementById('copy');
+    var a = document.getElementById('addr');
+    if (!b || !a) return;
+    b.addEventListener('click', function () {
+      var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy email'; }, 1800); };
+      var pick = function () { var r = document.createRange(); r.selectNodeContents(a); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected'; };
+      try { navigator.clipboard.writeText(a.textContent).then(done, pick); } catch (e) { pick(); }
+    });
+  })();
+</script>
+
+<footer>
+  <div class="wrap">
+    <span>Hookreel · hookreel.studio@gmail.com</span>
+    <span><a href="mailto:hookreel.studio@gmail.com">hookreel.studio@gmail.com</a></span>
+  </div>
+</footer>
