@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Free video ad hook writer for TikTok, Reels and Shorts | Hookreel</title>
+<meta name="description" content="Type your product and who it's for, get 3 opening hooks for a vertical video ad, each with a shot plan. Free, no sign-up.">
+<meta property="og:title" content="Free video ad hook writer | Hookreel">
+<meta property="og:description" content="3 opening hooks for your next TikTok, Reels or Shorts ad, with a shot plan for each. Free, no sign-up.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://zhirsch522.github.io/hookreel-site/logo.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<style>
+  :root {
+    --bg: #ffffff;
+    --band: #f5f5f7;
+    --fg: #1d1d1f;
+    --muted: #6e6e73;
+    --line: #d2d2d7;
+    --accent: #0071e3;
+    --accent-press: #0062c4;
+    --accent-soft: #e8f2fc;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px)); }
+  .narrow { max-width: 720px; }
+
+  nav { position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.8); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 48px; gap: 16px; }
+  .wordmark { display: inline-flex; align-items: center; color: var(--fg); }
+  .wordmark:hover { text-decoration: none; }
+  .wordmark svg { height: 26px; width: auto; display: block; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border: 0; background: var(--accent); color: #fff; border-radius: 980px; padding: 0 22px; font: 400 17px/1 var(--font); letter-spacing: -0.01em; cursor: pointer; transition: background-color .2s ease; touch-action: manipulation; }
+  .btn:hover { background: var(--accent-press); text-decoration: none; }
+  nav .btn { min-height: 28px; padding: 0 12px; font-size: 13px; }
+  .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--line); border-radius: 980px; background: var(--bg); color: var(--fg); font: 500 14px/1 var(--font); cursor: pointer; touch-action: manipulation; }
+  .ghost:hover { border-color: var(--muted); }
+
+  .hero { text-align: center; padding-block: 72px 40px; }
+  .eyebrow { font-size: 19px; font-weight: 600; color: var(--muted); margin: 0 0 6px; }
+  h1 { font-size: clamp(40px, 7vw, 64px); line-height: 1.05; font-weight: 700; letter-spacing: -0.035em; margin: 0 auto; max-width: 14ch; text-wrap: balance; }
+  .sub { font-size: clamp(19px, 2.4vw, 22px); line-height: 1.38; color: var(--muted); max-width: 34ch; margin: 18px auto 0; text-wrap: balance; }
+
+  .tool { background: var(--band); padding-block: 56px 72px; }
+  form { background: var(--bg); border-radius: 20px; padding: 32px; display: grid; gap: 20px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .hint { font-weight: 400; color: var(--muted); }
+  input, select { width: 100%; min-height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--fg); font: 400 17px/1.2 var(--font); letter-spacing: -0.01em; -webkit-appearance: none; appearance: none; }
+  select { background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 21px, calc(100% - 15px) 21px; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .prefix { position: relative; }
+  .prefix span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+  .prefix input { padding-left: var(--pad, 132px); }
+  .submit { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .note { font-size: 14px; color: var(--muted); margin: 0; }
+  .err { color: #c9341b; font-size: 14px; margin: 0; }
+
+  #out { margin-top: 40px; }
+  #out[hidden] { display: none; }
+  .out-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  h2 { font-size: clamp(28px, 4.5vw, 40px); line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; margin: 0; }
+  .tools { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hooks { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 16px; counter-reset: hook; }
+  .hook { background: var(--bg); border-radius: 20px; padding: 28px; counter-increment: hook; }
+  .hook-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .kind { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.02em; }
+  .kind::before { content: "Hook " counter(hook) " · "; color: var(--muted); }
+  .line { font-size: clamp(22px, 3vw, 28px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; margin: 8px 0 18px; text-wrap: pretty; }
+  .beats { margin: 0; display: grid; grid-template-columns: 92px 1fr; gap: 10px 16px; font-size: 15px; }
+  .beats dt { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .beats dd { margin: 0; }
+  .why { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+
+  .cta { margin-top: 32px; background: var(--fg); color: #fff; border-radius: 20px; padding: 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .cta h3 { margin: 0; font-size: 24px; letter-spacing: -0.02em; }
+  .cta p { margin: 6px 0 0; color: #a1a1a6; font-size: 15px; max-width: 42ch; }
+
+  .how { padding-block: 72px; }
+  .tips { list-style: none; margin: 32px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .tips li { border-top: 1px solid var(--line); padding-top: 14px; }
+  .tips h3 { margin: 0 0 6px; font-size: 19px; letter-spacing: -0.02em; }
+  .tips p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  footer { background: var(--band); border-top: 1px solid var(--line); padding-block: 20px 40px; font-size: 12px; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr; }
+    form, .hook, .cta { padding: 24px 20px; }
+    .tips { grid-template-columns: 1fr; gap: 24px; }
+    .beats { grid-template-columns: 76px 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Hookreel hook writer","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Free tool that writes 3 opening hooks for a vertical video ad, with a shot plan for each."}</script>
+</head>
+<body>
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="wordmark" href="index.html" aria-label="Hookreel home"><svg viewBox="0 0 300 84" aria-hidden="true"><circle cx="40" cy="8" r="5" fill="none" stroke="var(--accent)" stroke-width="4"/><path d="M40 15 V58 a16 16 0 0 1 -32 0 V50" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"/><path d="M19 50 L32 58 L19 66 Z" fill="var(--accent)"/><text x="66" y="62" textLength="226" lengthAdjust="spacingAndGlyphs" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="42" font-weight="700" fill="currentColor">hookreel</text></svg></a>
+    <a class="btn" href="index.html#pricing">3 ads for $49</a>
+  </div>
+</nav>
+
+<main>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Free hook writer</p>
+      <h1>The first two seconds, written for you.</h1>
+      <p class="sub">Tell us what you sell and who it's for. Get 3 openings for a TikTok, Reels or Shorts ad, each with a shot plan.</p>
+    </div>
+  </header>
+
+  <section class="tool">
+    <div class="wrap narrow">
+      <form id="f" novalidate>
+        <div class="row">
+          <div>
+            <label for="name">Product or app name</label>
+            <input id="name" name="name" autocomplete="off" placeholder="e.g. Stride" maxlength="40" required>
+          </div>
+          <div>
+            <label for="kind">What is it?</label>
+            <select id="kind" name="kind">
+              <option value="app">An app</option>
+              <option value="product">A physical product</option>
+              <option value="service">A service</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="outcome">It helps people… <span class="hint">(finish the sentence)</span></label>
+          <div class="prefix"><span id="pre">It helps people</span><input id="outcome" name="outcome" autocomplete="off" placeholder="walk 10,000 steps a day" maxlength="80" required></div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="who">Who is it for? <span class="hint">(plural)</span></label>
+            <input id="who" name="who" autocomplete="off" placeholder="busy parents" maxlength="40" required>
+          </div>
+          <div>
+            <label for="pain">What's annoying without it? <span class="hint">(optional)</span></label>
+            <input id="pain" name="pain" autocomplete="off" placeholder="sitting at a desk all day" maxlength="60">
+          </div>
+        </div>
+        <div class="submit">
+          <button class="btn" type="submit">Write my hooks</button>
+          <p class="note">Free. Nothing is saved or sent anywhere.</p>
+        </div>
+        <p id="err" class="err" role="alert" hidden></p>
+      </form>
+
+      <div id="out" hidden aria-live="polite">
+        <div class="out-head">
+          <h2>Your 3 hooks.</h2>
+          <div class="tools">
+            <button id="again" class="ghost" type="button">Write 3 more</button>
+            <button id="copyall" class="ghost" type="button">Copy all</button>
+          </div>
+        </div>
+        <ol id="hooks" class="hooks"></ol>
+        <div class="cta">
+          <div>
+            <h3>Want these as finished ads?</h3>
+            <p>We turn hooks like these into 3 vertical ads with captions and music. $49, in your inbox in 48 hours.</p>
+          </div>
+          <a id="order" class="btn" href="mailto:hookreel.studio@gmail.com">Make them for $49</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap">
+      <h2>What makes a hook work.</h2>
+      <ul class="tips">
+        <li><h3>Say who it's for</h3><p>Naming the viewer ("busy parents, stop scrolling") makes the right people stay and the wrong ones leave, which is cheaper for you.</p></li>
+        <li><h3>Show the problem first</h3><p>People stop for a feeling they know. The product can wait until second three.</p></li>
+        <li><h3>Test more than one</h3><p>The same ad with a different opening can do several times better. That's why every Hookreel pack has different hooks.</p></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Hookreel · <a href="mailto:hookreel.studio@gmail.com">hookreel.studio@gmail.com</a></span>
+    <span id="foot-links"><a href="index.html">Home</a> · <a href="video-ads-for-productivity-apps.html">Productivity apps</a> · <a href="video-ads-for-fitness-apps.html">Fitness apps</a> · <a href="video-ads-for-shopify-stores.html">Shopify stores</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var f = document.getElementById('f');
+  var out = document.getElementById('out');
+  var list = document.getElementById('hooks');
+  var err = document.getElementById('err');
+  var used = [];
+  var current = [];
+
+  function clean(s) {
+    return (s || '').trim().replace(/\s+/g, ' ').replace(/[.!?]+$/, '');
+  }
+  function lowerFirst(s) {
+    // keep acronyms like "AI" as typed
+    if (/^[A-Z]{2}/.test(s)) return s;
+    return s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function stripLead(s) {
+    return s.replace(/^(it\s+)?helps\s+(people\s+)?(to\s+)?/i, '').replace(/^to\s+/i, '');
+  }
+
+  var noun = { app: 'app', product: 'product', service: 'service' };
+  var show = {
+    app: function (d) { return 'Screen recording: open ' + d.name + ' and do the one thing it does best, in under 5 taps.'; },
+    product: function (d) { return 'Close-up of ' + d.name + ' in hand, then in use where ' + d.who + ' would actually use it.'; },
+    service: function (d) { return 'Quick before and after of what ' + d.name + ' handles, shot like a phone video, not a commercial.'; }
+  };
+  var end = function (d) {
+    return d.kind === 'app' ? d.name + ' on the App Store screen. Text: "Try it free."'
+      : d.kind === 'product' ? d.name + ' on a clean background. Text: "Link in bio."'
+      : d.name + ' logo. Text: "Book in 2 minutes."';
+  };
+
+  // Each formula: needs pain?, label, hook line, opening shot, why it works
+  var F = [
+    { label: 'Call-out', line: function (d) { return cap(d.who) + ', stop scrolling.'; },
+      open: function (d) { return 'Face to camera, mid-step, like you just remembered something. Text on screen matches the line.'; },
+      why: 'Naming the viewer filters for buyers in the first second.' },
+    { label: 'Sign', line: function (d) { return 'This is your sign to ' + d.outcome + '.'; },
+      open: function (d) { return 'Slow push in on a phone lock screen. The line types itself out as a notification.'; },
+      why: 'Feels like a personal nudge, not an ad, so people read it.' },
+    { label: 'Hard truth', line: function (d) { return "You don't need more willpower to " + d.outcome + '. You need ' + d.name + '.'; },
+      open: function (d) { return 'Someone sighs and closes a notes app full of crossed-out plans. Hard cut to the product.'; },
+      why: 'Takes the blame off the viewer, which makes them want the fix.' },
+    { label: 'Secret', line: function (d) { return 'Nobody tells ' + d.who + ' there’s an easier way to ' + d.outcome + '.'; },
+      open: function (d) { return 'Whisper to camera, leaning in, captions in small text that grow on the last word.'; },
+      why: 'A hint of insider info keeps people watching for the reveal.' },
+    { label: 'Easiest way', line: function (d) { return 'The easiest way to ' + d.outcome + ', in 15 seconds.'; },
+      open: function (d) { return 'A visible 15-second timer in the corner starts counting down from the first frame.'; },
+      why: 'The time promise tells people the payoff is close, so they stay.' },
+    { label: 'Why everyone', line: function (d) { return 'Why are so many ' + d.who + ' switching to ' + d.name + '?'; },
+      open: function (d) { return 'Fast montage of three different people using it, one second each.'; },
+      why: 'Social proof as a question makes people want the answer.' },
+    { label: 'Didn’t know', line: function (d) { return 'The ' + noun[d.kind] + ' ' + d.who + ' didn’t know they needed.'; },
+      open: function (d) { return 'Unboxing or first-open moment, filmed handheld, with a small "wait" reaction.'; },
+      why: 'Promises a discovery, which is why people share these.' },
+    { label: 'Mistake', line: function (d) { return 'If you’re still trying to ' + d.outcome + ' the hard way, watch this.'; },
+      open: function (d) { return 'Show the hard way first: messy, slow, a little funny. Freeze frame on the line.'; },
+      why: 'People stop to check if they’re making the mistake.' },
+    { label: 'Explainer', line: function (d) { return d.name + ', explained in 15 seconds.'; },
+      open: function (d) { return 'Clean title card, then straight into the product. No intro, no logo sting.'; },
+      why: 'Honest and fast. Works well as a second ad once people have seen the first.' },
+    { label: 'Pain', needs: 'pain', line: function (d) { return 'If ' + d.pain + ' sounds like you, watch this.'; },
+      open: function (d) { return 'Show the annoying moment for real: ' + d.pain + '. Hold on it a beat too long.'; },
+      why: 'People stop for a feeling they already know.' },
+    { label: 'Before / after', needs: 'pain', line: function (d) { return 'Before ' + d.name + ': ' + d.pain + '. After: I ' + d.outcomeI + '.'; },
+      open: function (d) { return 'Split screen. Left side grey and slow, right side bright and quick. The line sits across the middle.'; },
+      why: 'Shows the change in one frame, so the point lands even on mute.' },
+    { label: 'Things they say', needs: 'pain', line: function (d) { return 'Things ' + d.who + ' say before they find ' + d.name + ':'; },
+      open: function (d) { return 'Three quick cuts of relatable complaints about ' + d.pain + ', each with a caption.'; },
+      why: 'Viewers recognise themselves, then the product answers them.' },
+    { label: '7-day test', line: function (d) { return 'I gave ' + d.name + ' 7 days to help me ' + d.outcome + '.'; },
+      open: function (d) { return 'Day 1 title card, handheld selfie video, honest and a little skeptical.'; },
+      why: 'A challenge has a built-in ending people wait for.' }
+  ];
+
+  function pick(d) {
+    var pool = F.filter(function (x, i) { return (!x.needs || d[x.needs]) && used.indexOf(i) === -1; });
+    if (pool.length < 3) { used = []; pool = F.filter(function (x) { return !x.needs || d[x.needs]; }); }
+    // put pain-based hooks first when pain is given, otherwise shuffle
+    var shuffled = pool.slice().sort(function () { return Math.random() - 0.5; });
+    if (d.pain && used.length === 0) {
+      shuffled.sort(function (a, b) { return (b.needs ? 1 : 0) - (a.needs ? 1 : 0); });
+      shuffled = [shuffled[0]].concat(shuffled.slice(1).sort(function () { return Math.random() - 0.5; }));
+    }
+    var chosen = shuffled.slice(0, 3);
+    chosen.forEach(function (c) { used.push(F.indexOf(c)); });
+    return chosen;
+  }
+
+  function data() {
+    var d = {
+      name: clean(document.getElementById('name').value),
+      kind: document.getElementById('kind').value,
+      outcome: lowerFirst(stripLead(clean(document.getElementById('outcome').value))),
+      who: lowerFirst(clean(document.getElementById('who').value)),
+      pain: lowerFirst(clean(document.getElementById('pain').value))
+    };
+    d.outcomeI = d.outcome; // "I walk 10,000 steps a day" reads fine in present tense
+    return d;
+  }
+
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function render(d) {
+    current = pick(d).map(function (x) {
+      return { label: x.label, line: x.line(d), open: x.open(d), show: show[d.kind](d), end: end(d), why: x.why };
+    });
+    list.innerHTML = current.map(function (h, i) {
+      return '<li class="hook"><div class="hook-top"><span class="kind">' + esc(h.label) + '</span>' +
+        '<button class="ghost copy1" type="button" data-i="' + i + '">Copy</button></div>' +
+        '<p class="line">' + esc(h.line) + '</p>' +
+        '<dl class="beats"><dt>0–2s</dt><dd>' + esc(h.open) + '</dd>' +
+        '<dt>2–12s</dt><dd>' + esc(h.show) + '</dd>' +
+        '<dt>12–15s</dt><dd>' + esc(h.end) + '</dd></dl>' +
+        '<p class="why">' + esc(h.why) + '</p></li>';
+    }).join('');
+    var body = 'Product: ' + d.name + '\nIt helps people ' + d.outcome + '\nFor: ' + d.who +
+      '\n\nHooks I liked:\n' + current.map(function (h, i) { return (i + 1) + '. ' + h.line; }).join('\n') +
+      '\n\nProduct or app link: ';
+    document.getElementById('order').href = 'mailto:hookreel.studio@gmail.com?subject=' +
+      encodeURIComponent('Order: 3 ads ($49) for ' + d.name) + '&body=' + encodeURIComponent(body);
+    out.hidden = false;
+  }
+
+  function asText(h) {
+    return h.line + '\n0-2s: ' + h.open + '\n2-12s: ' + h.show + '\n12-15s: ' + h.end;
+  }
+  function copy(text, btn, label) {
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = label; }, 1600); };
+    try { navigator.clipboard.writeText(text).then(done, function () { btn.textContent = 'Select and copy'; }); }
+    catch (e) { btn.textContent = 'Select and copy'; }
+  }
+
+  var last = null;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var d = data();
+    var missing = [];
+    if (!d.name) missing.push('the name');
+    if (!d.outcome) missing.push('what it helps people do');
+    if (!d.who) missing.push('who it’s for');
+    if (missing.length) { err.textContent = 'Add ' + missing.join(', ') + ' and try again.'; err.hidden = false; return; }
+    err.hidden = true;
+    used = [];
+    last = d;
+    render(d);
+    out.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+  document.getElementById('again').addEventListener('click', function () { if (last) render(last); });
+  document.getElementById('copyall').addEventListener('click', function (e) {
+    copy(current.map(asText).join('\n\n'), e.currentTarget, 'Copy all');
+  });
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('.copy1');
+    if (!b) return;
+    copy(asText(current[+b.dataset.i]), b, 'Copy');
+  });
+})();
+</script>
+</body>
+</html>
